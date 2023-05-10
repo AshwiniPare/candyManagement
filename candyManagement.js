@@ -15,7 +15,7 @@ function saveToLocalStorage(event)
         quantity
     }
 
-    axios.post('https://crudcrud.com/api/909b34e125cd4c7bb8ed7ff8ca62ba31/candyData', myObj)
+    axios.post('https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData', myObj)
     .then((response) => {
         showItemOnScreen(response.data)
         console.log(response)
@@ -27,7 +27,7 @@ function saveToLocalStorage(event)
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    axios.get("https://crudcrud.com/api/909b34e125cd4c7bb8ed7ff8ca62ba31/candyData")
+    axios.get("https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData")
         .then((response) => {
             console.log(response)
 
@@ -41,34 +41,34 @@ function showItemOnScreen(myObj)
 {
     const parentElem = document.getElementById('items');
     const childElem = document.createElement('li');
-    childElem.textContent = myObj.name+"-"+myObj.desc+"-"+myObj.price+" " +myObj.quantity;
+    childElem.textContent = myObj.name+"-"+myObj.desc+"-"+myObj.price+"-" +myObj.quantity;
 
-    //adding delete button
+    //adding buy1 button
     const buyOneBtn = document.createElement('input');
     buyOneBtn.type="button";
     buyOneBtn.value="Buy1";
     buyOneBtn.onclick = () => {
-       let qty = myObj.quantity-1;
-       if (qty>0) { 
-            axios.put(`https://crudcrud.com/api/909b34e125cd4c7bb8ed7ff8ca62ba31/candyData/${myObj._id}`,{
-                        name: myObj.name,
-                        desc: myObj.desc,
-                        price: myObj.price,
-                        quantity: qty
-                    })
-                .then((response) => {
-                        
-                        childElem.textContent = myObj.name+"-"+ myObj.desc+"-"+myObj.price+" " + qty;
-                        myObj.quantity = qty;
-                        childElem.appendChild(buyOneBtn);
-                        childElem.appendChild(buyTwoBtn);
-                        childElem.appendChild(buyThreeBtn);
-                        parentElem.appendChild(childElem);
-                    })
-                .catch(error => console.error(error))
-        } else {
-            alert('Quantity is not available');
-        }
+            let qty = myObj.quantity-1;
+            if (qty>=0) { 
+                    axios.put(`https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData/${myObj._id}`,{
+                                name: myObj.name,
+                                desc: myObj.desc,
+                                price: myObj.price,
+                                quantity: qty
+                            })
+                        .then((response) => {
+                                
+                                childElem.textContent = myObj.name+"-"+ myObj.desc+"-"+myObj.price+"-" + qty;
+                                myObj.quantity = qty;
+                                childElem.appendChild(buyOneBtn);
+                                childElem.appendChild(buyTwoBtn);
+                                childElem.appendChild(buyThreeBtn);
+                                parentElem.appendChild(childElem);
+                            })
+                        .catch(error => console.error(error))
+                } else {
+                    alert('Quantity is not available');
+                }
     }
 
 
@@ -77,8 +77,8 @@ function showItemOnScreen(myObj)
     buyTwoBtn.value="Buy2";
     buyTwoBtn.onclick = () => {
        let qty = myObj.quantity-2;
-       if (qty>0) { 
-        axios.put(`https://crudcrud.com/api/909b34e125cd4c7bb8ed7ff8ca62ba31/candyData/${myObj._id}`,{
+       if (qty>=0) { 
+        axios.put(`https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData/${myObj._id}`,{
                     name: myObj.name,
                     desc: myObj.desc,
                     price: myObj.price,
@@ -86,7 +86,7 @@ function showItemOnScreen(myObj)
                 })
                 .then((response) => {
                     
-                    childElem.textContent = myObj.name+"-"+myObj.desc+"-"+myObj.price+" " + qty;
+                    childElem.textContent = myObj.name+"-"+myObj.desc+"-"+myObj.price+"-" + qty;
                     myObj.quantity = qty;
                     childElem.appendChild(buyOneBtn);
                     childElem.appendChild(buyTwoBtn);
@@ -104,8 +104,8 @@ function showItemOnScreen(myObj)
     buyThreeBtn.value="Buy3";
     buyThreeBtn.onclick = () => {
        let qty = myObj.quantity-3;
-       if (qty>0) { 
-        axios.put(`https://crudcrud.com/api/909b34e125cd4c7bb8ed7ff8ca62ba31/candyData/${myObj._id}`,{
+       if (qty>=0) { 
+        axios.put(`https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData/${myObj._id}`,{
                     name: myObj.name,
                     desc: myObj.desc,
                     price: myObj.price,
@@ -113,7 +113,7 @@ function showItemOnScreen(myObj)
                 })
                 .then((response) => {
                     
-                    childElem.textContent = myObj.name+"-"+myObj.desc+"-"+myObj.price+" " + qty;
+                    childElem.textContent = myObj.name+"-"+myObj.desc+"-"+myObj.price+"-" + qty;
                     myObj.quantity = qty;
                     childElem.appendChild(buyOneBtn);
                     childElem.appendChild(buyTwoBtn);
