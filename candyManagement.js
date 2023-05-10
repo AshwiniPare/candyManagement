@@ -14,30 +14,35 @@ function saveToLocalStorage(event)
         price,
         quantity
     }
-
-    axios.post('https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData', myObj)
-    .then((response) => {
-        showItemOnScreen(response.data)
-        console.log(response)
-    })
-    .catch((err) => {
-        document.body.innerHTML = document.body.innerHTML + "<h4> something is wrong</h4>"
-        console.error(err);
-    })   
+    
+    sendPostRequest(myObj);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-    axios.get("https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData")
-        .then((response) => {
-            console.log(response)
+async function sendPostRequest (myObj) {
+   try {
+        const response = await axios.post('https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData', myObj)
+        showItemOnScreen(response.data)
+   }
+   catch(err) {
+        console.error(err);
+   }
+}
 
-            for(let i=0; i<response.data.length; i++)
+async function sendGetRequest() {
+    try {
+        const response = await axios.get("https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData")
+        for(let i=0; i<response.data.length; i++)
                 showItemOnScreen(response.data[i]);
-        })
-        .catch(error => console.error(error))
-})
+    }
+    catch(err) {
+        console.error(err);
+    }
+}
 
-function showItemOnScreen(myObj)
+
+window.addEventListener("DOMContentLoaded", sendGetRequest);
+
+ function showItemOnScreen(myObj)
 {
     const parentElem = document.getElementById('items');
     const childElem = document.createElement('li');
@@ -47,83 +52,96 @@ function showItemOnScreen(myObj)
     const buyOneBtn = document.createElement('input');
     buyOneBtn.type="button";
     buyOneBtn.value="Buy1";
-    buyOneBtn.onclick = () => {
+  
+    buyOneBtn.onclick = async () => {
+        try {
             let qty = myObj.quantity-1;
             if (qty>=0) { 
-                    axios.put(`https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData/${myObj._id}`,{
+                    const response  = await axios.put(`https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData/${myObj._id}`,{
                                 name: myObj.name,
                                 desc: myObj.desc,
                                 price: myObj.price,
                                 quantity: qty
-                            })
-                        .then((response) => {
-                                
-                                childElem.textContent = myObj.name+"-"+ myObj.desc+"-"+myObj.price+"-" + qty;
-                                myObj.quantity = qty;
-                                childElem.appendChild(buyOneBtn);
-                                childElem.appendChild(buyTwoBtn);
-                                childElem.appendChild(buyThreeBtn);
-                                parentElem.appendChild(childElem);
-                            })
-                        .catch(error => console.error(error))
-                } else {
+                    })
+  
+                    childElem.textContent = myObj.name+"-"+ myObj.desc+"-"+myObj.price+"-" + qty;
+                    myObj.quantity = qty;
+                    childElem.appendChild(buyOneBtn);
+                    childElem.appendChild(buyTwoBtn);
+                    childElem.appendChild(buyThreeBtn);
+                    parentElem.appendChild(childElem);
+                          
+                        
+            } else {
                     alert('Quantity is not available');
-                }
+            }
+        }
+        catch(err) {
+            console.error(err);
+        }
     }
 
 
     const buyTwoBtn = document.createElement('input');
     buyTwoBtn.type="button";
     buyTwoBtn.value="Buy2";
-    buyTwoBtn.onclick = () => {
-       let qty = myObj.quantity-2;
-       if (qty>=0) { 
-        axios.put(`https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData/${myObj._id}`,{
-                    name: myObj.name,
-                    desc: myObj.desc,
-                    price: myObj.price,
-                    quantity: qty
-                })
-                .then((response) => {
-                    
-                    childElem.textContent = myObj.name+"-"+myObj.desc+"-"+myObj.price+"-" + qty;
+    buyTwoBtn.onclick = async () => {
+        try {
+            let qty = myObj.quantity-2;
+            if (qty>=0) { 
+                    const response  = await axios.put(`https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData/${myObj._id}`,{
+                                name: myObj.name,
+                                desc: myObj.desc,
+                                price: myObj.price,
+                                quantity: qty
+                    })
+  
+                    childElem.textContent = myObj.name+"-"+ myObj.desc+"-"+myObj.price+"-" + qty;
                     myObj.quantity = qty;
                     childElem.appendChild(buyOneBtn);
                     childElem.appendChild(buyTwoBtn);
                     childElem.appendChild(buyThreeBtn);
                     parentElem.appendChild(childElem);
-                })
-                .catch(error => console.error(error))
+                          
+                        
             } else {
-                alert('Quantity is not available');
+                    alert('Quantity is not available');
             }
+        }
+        catch(err) {
+            console.error(err);
+        }
     }
   
     const buyThreeBtn = document.createElement('input');
     buyThreeBtn.type="button";
     buyThreeBtn.value="Buy3";
-    buyThreeBtn.onclick = () => {
-       let qty = myObj.quantity-3;
-       if (qty>=0) { 
-        axios.put(`https://crudcrud.com/api/078c10cca01c450abff002e5d1f2e173/candyData/${myObj._id}`,{
-                    name: myObj.name,
-                    desc: myObj.desc,
-                    price: myObj.price,
-                    quantity: qty
-                })
-                .then((response) => {
-                    
-                    childElem.textContent = myObj.name+"-"+myObj.desc+"-"+myObj.price+"-" + qty;
+    buyThreeBtn.onclick = async () => {
+        try {
+            let qty = myObj.quantity-3;
+            if (qty>=0) { 
+                    const response  = await axios.put(`https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData/${myObj._id}`,{
+                                name: myObj.name,
+                                desc: myObj.desc,
+                                price: myObj.price,
+                                quantity: qty
+                    })
+  
+                    childElem.textContent = myObj.name+"-"+ myObj.desc+"-"+myObj.price+"-" + qty;
                     myObj.quantity = qty;
                     childElem.appendChild(buyOneBtn);
                     childElem.appendChild(buyTwoBtn);
                     childElem.appendChild(buyThreeBtn);
                     parentElem.appendChild(childElem);
-                })
-                .catch(error => console.error(error))
+                          
+                        
             } else {
-                alert('Quantity is not available');
+                    alert('Quantity is not available');
             }
+        }
+        catch(err) {
+            console.error(err);
+        }
     }
 
     childElem.appendChild(buyOneBtn);
