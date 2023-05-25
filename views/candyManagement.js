@@ -20,8 +20,8 @@ function saveToLocalStorage(event)
 
 async function sendPostRequest (myObj) {
    try {
-        const response = await axios.post('https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData', myObj)
-        showItemOnScreen(response.data)
+        const response = await axios.post('http://localhost:3000/candy/add-candy', myObj)
+        showItemOnScreen(response.data.newCandyDetail)
    }
    catch(err) {
         console.error(err);
@@ -30,9 +30,9 @@ async function sendPostRequest (myObj) {
 
 async function sendGetRequest() {
     try {
-        const response = await axios.get("https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData")
-        for(let i=0; i<response.data.length; i++)
-                showItemOnScreen(response.data[i]);
+        const response = await axios.get("http://localhost:3000/candy/get-candies")
+        for(let i=0; i<response.data.allCandies.length; i++)
+                showItemOnScreen(response.data.allCandies[i]);
     }
     catch(err) {
         console.error(err);
@@ -57,7 +57,7 @@ window.addEventListener("DOMContentLoaded", sendGetRequest);
         try {
             let qty = myObj.quantity-1;
             if (qty>=0) { 
-                    const response  = await axios.put(`https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData/${myObj._id}`,{
+                    const response  = await axios.put(`http://localhost:3000/candy/update-candy/${myObj.id}`,{
                                 name: myObj.name,
                                 desc: myObj.desc,
                                 price: myObj.price,
@@ -89,7 +89,7 @@ window.addEventListener("DOMContentLoaded", sendGetRequest);
         try {
             let qty = myObj.quantity-2;
             if (qty>=0) { 
-                    const response  = await axios.put(`https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData/${myObj._id}`,{
+                    const response  = await axios.put(`http://localhost:3000/candy/update-candy/${myObj.id}`,{
                                 name: myObj.name,
                                 desc: myObj.desc,
                                 price: myObj.price,
@@ -120,7 +120,7 @@ window.addEventListener("DOMContentLoaded", sendGetRequest);
         try {
             let qty = myObj.quantity-3;
             if (qty>=0) { 
-                    const response  = await axios.put(`https://crudcrud.com/api/fd90505800e5488d9e3dbe12fb49d3fe/candyData/${myObj._id}`,{
+                    const response  = await axios.put(`http://localhost:3000/candy/update-candy/${myObj.id}`,{
                                 name: myObj.name,
                                 desc: myObj.desc,
                                 price: myObj.price,
